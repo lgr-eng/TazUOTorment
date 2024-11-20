@@ -2475,6 +2475,7 @@ namespace ClassicUO.Game.Managers
                 case MacroType.Close:
                 case MacroType.Minimize:
                 case MacroType.Maximize:
+                case MacroType.ToggleGump:
                 case MacroType.UseSkill:
                 case MacroType.ArmDisarm:
                 case MacroType.InvokeVirtue:
