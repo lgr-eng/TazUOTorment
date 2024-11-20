@@ -2395,6 +2395,7 @@ namespace ClassicUO.Game.Managers
                 case MacroType.Close:
                 case MacroType.Minimize:
                 case MacroType.Maximize:
+                case MacroType.ToggleGump:
                     offset = (int)MacroSubType.Configuration;
                     count = MacroSubType.Anatomy - MacroSubType.Configuration;
 
