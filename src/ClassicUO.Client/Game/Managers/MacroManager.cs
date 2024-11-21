@@ -1,6 +1,6 @@
 #region license
 
-// Copyright (c) 2021, andreakarasho
+// Copyright (c) 2024, andreakarasho
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without
@@ -2570,7 +2570,6 @@ namespace ClassicUO.Game.Managers
         UseSkill,
         LastSkill,
         CastSpell,
-        CastSpellMastery,
         LastSpell,
         LastObject,
         Bow,
