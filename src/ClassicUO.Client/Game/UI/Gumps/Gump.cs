@@ -160,6 +160,18 @@ namespace ClassicUO.Game.UI.Gumps
             writer.WriteAttributeString("alphaOffset", AlphaOffset.ToString());
         }
 
+        public void CenterXInScreen()
+        {
+            Rectangle windowBounds = Client.Game.Window.ClientBounds;
+            X = (windowBounds.Width - Width) / 2;
+        }
+
+        public void CenterYInScreen()
+        {
+            Rectangle windowBounds = Client.Game.Window.ClientBounds;
+            Y = (windowBounds.Height - Width) / 2;
+        }
+
         public void SetInScreen()
         {
             Rectangle windowBounds = Client.Game.Window.ClientBounds;
