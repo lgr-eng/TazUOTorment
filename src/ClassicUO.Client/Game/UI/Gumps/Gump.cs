@@ -143,7 +143,7 @@ namespace ClassicUO.Game.UI.Gumps
         protected override void OnMouseUp(int x, int y, MouseButtonType button)
         {
             base.OnMouseUp(x, y, button);
-            if (CanBeLocked && Keyboard.Ctrl && Keyboard.Alt && UIManager.MouseOverControl != null && (UIManager.MouseOverControl == this || UIManager.MouseOverControl.RootParent == this))
+            if (CanBeLocked && ((Keyboard.Ctrl && Keyboard.Alt) || Controller.Button_LeftTrigger) && UIManager.MouseOverControl != null && (UIManager.MouseOverControl == this || UIManager.MouseOverControl.RootParent == this))
             {
                 IsLocked ^= true;
             }
