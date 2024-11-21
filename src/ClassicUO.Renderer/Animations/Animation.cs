@@ -160,16 +160,17 @@ namespace ClassicUO.Renderer.Animations
 
                     if (!indices.IsEmpty)
                     {
-                        if (index.Flags.HasFlag(AnimationFlags.UseUopAnimation))
+                        if ((index.Flags & AnimationFlags.UseUopAnimation) != 0)
                         {
                             index.UopGroups = new AnimationGroupUop[indices.Length];
                             for (int i = 0; i < index.UopGroups.Length; i++)
                             {
                                 index.UopGroups[i] = new AnimationGroupUop();
                                 index.UopGroups[i].FileIndex = index.FileIndex;
-                                index.UopGroups[i].DecompressedLength = indices[i].Unknown;
+                                index.UopGroups[i].DecompressedLength = indices[i].UncompressedSize;
                                 index.UopGroups[i].CompressedLength = indices[i].Size;
                                 index.UopGroups[i].Offset = indices[i].Position;
+                                index.UopGroups[i].CompressionType = indices[i].CompressionType;
                             }
                         }
                         else
@@ -251,11 +252,12 @@ namespace ClassicUO.Renderer.Animations
                 )
                 {
                     var uopGroupObj = (AnimationGroupUop)groupObj;
-                    var ff = new AnimationsLoader.AnimIdxBlock()
+                    var ff = new AnimationsLoader.AnimationDirection()
                     {
                         Position = uopGroupObj.Offset,
                         Size = uopGroupObj.CompressedLength,
-                        Unknown = uopGroupObj.DecompressedLength
+                        UncompressedSize = uopGroupObj.DecompressedLength,
+                        CompressionType = uopGroupObj.CompressionType
                     };
 
                     frames = AnimationsLoader.Instance.ReadUOPAnimationFrames(
@@ -269,7 +271,7 @@ namespace ClassicUO.Renderer.Animations
                 }
                 else
                 {
-                    var ff = new AnimationsLoader.AnimIdxBlock()
+                    var ff = new AnimationsLoader.AnimationDirection()
                     {
                         Position = groupObj.Direction[dir].Address,
                         Size = groupObj.Direction[dir].Size,
