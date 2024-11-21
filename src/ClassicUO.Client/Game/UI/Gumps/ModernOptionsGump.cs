@@ -888,7 +888,7 @@ namespace ClassicUO.Game.UI.Gumps
                 infoBarItems.ForceSizeUpdate();
                 infoBarItems.Parent?.ForceSizeUpdate();
                 Client.Game.GetScene<GameScene>().InfoBars?.AddItem(ibi);
-                UIManager.GetGump<InfoBarGump>()?.ResetItems(); 
+                UIManager.GetGump<InfoBarGump>()?.ResetItems();
                 content.AddToLeft(ibbc);
                 content.ForceSizeUpdate();
                 int yOffset = 0;
@@ -901,17 +901,17 @@ namespace ClassicUO.Game.UI.Gumps
                             if (scrollChild is InfoBarBuilderControl control)
                             {
                                 control.Y = yOffset + 170;
-                                yOffset += control.Height; 
+                                yOffset += control.Height;
                                 content.ForceSizeUpdate();
                             }
                         }
-                       
+
                     }
                 }
                 content.ForceSizeUpdate();
             };
             content.BlankLine();
-            content.AddToLeftText(new TextBox(lang.GetInfoBars.Label, Theme.FONT, Theme.STANDARD_TEXT_SIZE, 100, Theme.TEXT_FONT_COLOR, FontStashSharp.RichText.TextHorizontalAlignment.Center, false), 0 , 135);
+            content.AddToLeftText(new TextBox(lang.GetInfoBars.Label, Theme.FONT, Theme.STANDARD_TEXT_SIZE, 100, Theme.TEXT_FONT_COLOR, FontStashSharp.RichText.TextHorizontalAlignment.Center, false), 0, 135);
             content.AddToLeftText(new TextBox(lang.GetInfoBars.Color, Theme.FONT, Theme.STANDARD_TEXT_SIZE, 100, Theme.TEXT_FONT_COLOR, FontStashSharp.RichText.TextHorizontalAlignment.Center, false), 120, 135);
             content.AddToLeftText(new TextBox(lang.GetInfoBars.Data, Theme.FONT, Theme.STANDARD_TEXT_SIZE, 100, Theme.TEXT_FONT_COLOR, FontStashSharp.RichText.TextHorizontalAlignment.Center, false), 180, 135);
             content.AddToLine(new Line(0, 10, content.LeftWidth, 1, Color.Gray.PackedValue), 0, 160);
@@ -925,7 +925,7 @@ namespace ClassicUO.Game.UI.Gumps
                 infoBarItems.ForceSizeUpdate();
                 infoBarItems.Parent?.ForceSizeUpdate();
                 int yOffset = 0;
-                
+
                 content.AddToLeft(ibbc);
                 content.ForceSizeUpdate();
                 foreach (var child in content.Children)
@@ -947,7 +947,7 @@ namespace ClassicUO.Game.UI.Gumps
                 }
                 content.ForceSizeUpdate();
             }
-            
+
 
             #endregion
 
@@ -1939,11 +1939,14 @@ namespace ClassicUO.Game.UI.Gumps
             conditionsDataBox.ReArrangeChildren();
             conditionsDataBox.ForceSizeUpdate();
 
+            ScrollArea scroll = new ScrollArea(0, 0, mainContent.RightWidth, mainContent.Height - PositionHelper.Y) { CanMove = true, AcceptMouseInput = true };
+            scroll.Add(conditionsDataBox);
+
             options.Add(s = new SettingsOption(
-                "",
-                conditionsDataBox,
-                mainContent.RightWidth,
-                PAGE.TUOCooldowns
+               "",
+              scroll,
+              mainContent.RightWidth,
+              PAGE.TUOCooldowns
             ));
             PositionHelper.PositionControl(s.FullControl);
         }
@@ -2876,7 +2879,7 @@ namespace ClassicUO.Game.UI.Gumps
             };
             main.Add(_preview);
 
-            main.Height = _conditionText.Bounds.Bottom;
+            main.ForceSizeUpdate();
 
             _background.Width = width;
             _background.Height = main.Height;
@@ -4711,10 +4714,10 @@ namespace ClassicUO.Game.UI.Gumps
                             {
                                 if (scrollChild is InfoBarBuilderControl control)
                                 {
-                             
+
                                     scrollChild.Remove(this);
                                     control.Y = yOffset + 170;
-                                    yOffset += control.Height; 
+                                    yOffset += control.Height;
                                     control.ForceSizeUpdate();
                                     content.ForceSizeUpdate();
 
