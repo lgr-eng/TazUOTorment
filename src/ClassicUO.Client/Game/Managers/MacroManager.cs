@@ -1095,6 +1095,11 @@ namespace ClassicUO.Game.Managers
                     }
 
                     break;
+                case MacroType.ToggleDurabilityGump:
+                    if (!GameActions.CloseDurabilityGump())
+                        GameActions.OpenDurabilityGump();
+
+                    break;
 
                 case MacroType.OpenDoor:
                     GameActions.OpenDoor();
@@ -2633,7 +2638,8 @@ namespace ClassicUO.Game.Managers
         ClientCommand,
         StunAbility,
         DisarmAbility,
-        ToggleGump
+        ToggleGump,
+        ToggleDurabilityGump
     }
 
     public enum MacroSubType

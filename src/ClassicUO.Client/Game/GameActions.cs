@@ -74,6 +74,28 @@ namespace ClassicUO.Game
             Socket.Send_ChangeWarMode(war);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>False if no durability gump was open</returns>
+        public static bool CloseDurabilityGump()
+        {
+            Gump g = UIManager.GetGump<DurabilitysGump>();
+
+            if (g != null)
+            {
+                g.Dispose();
+                return true;
+            }
+
+            return false;
+        }
+
+        public static void OpenDurabilityGump()
+        {
+            UIManager.Add(new DurabilitysGump());
+        }
+
         public static void OpenMacroGump(string name)
         {
             MacroGump macroGump = UIManager.GetGump<MacroGump>();
