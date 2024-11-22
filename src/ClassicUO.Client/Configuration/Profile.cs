@@ -600,6 +600,8 @@ namespace ClassicUO.Configuration
         public bool JournalAnchorEnabled { get; set; } = false;
         public bool EnableGumpCloseAnimation { get; set; } = true;
 
+        public bool EnableAutoLootProgressBar { get; set; } = true;
+
 
         public void Save(string path, bool saveGumps = true)
         {

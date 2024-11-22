@@ -81,7 +81,7 @@ namespace ClassicUO.Game.UI.Gumps
                         if (c.Alpha > 1) c.Alpha = 1;
                     }
                 }
-                else if(Alpha > 0.1)
+                else if (Alpha > 0.1)
                 {
                     AlphaOffset -= 0.02f;
                     Alpha -= 0.02f;
@@ -169,7 +169,19 @@ namespace ClassicUO.Game.UI.Gumps
         public void CenterYInScreen()
         {
             Rectangle windowBounds = Client.Game.Window.ClientBounds;
-            Y = (windowBounds.Height - Width) / 2;
+            Y = (windowBounds.Height - Height) / 2;
+        }
+
+        public void CenterXInViewPort()
+        {
+            var camera = Client.Game.Scene.Camera;
+            X = camera.Bounds.X + ((camera.Bounds.Width - Width) / 2);;
+        }
+
+        public void CenterYInViewPort()
+        {
+            var camera = Client.Game.Scene.Camera;
+            Y = camera.Bounds.Y + ((camera.Bounds.Height - Height) / 2);
         }
 
         public void SetInScreen()

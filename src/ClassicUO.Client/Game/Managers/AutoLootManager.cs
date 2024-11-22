@@ -45,19 +45,21 @@ namespace ClassicUO.Game.Managers
                         lootTaskRunning = true;
                         if (lootItems != null && !lootItems.IsEmpty)
                         {
-                            if(progressBarGump == null || progressBarGump.IsDisposed)
+                            if(ProfileManager.CurrentProfile.EnableAutoLootProgressBar && (progressBarGump == null || progressBarGump.IsDisposed))
                             {
                                 progressBarGump = new ProgressBarGump("Auto looting...", 0) { 
-                                    Y = (ProfileManager.CurrentProfile.GameWindowPosition.Y + ProfileManager.CurrentProfile.GameWindowSize.Y) - 150,
-                                    X = ProfileManager.CurrentProfile.GameWindowPosition.X + ((ProfileManager.CurrentProfile.GameWindowSize.X - progressBarGump.Width) / 2)
+                                    Y = (ProfileManager.CurrentProfile.GameWindowPosition.Y + ProfileManager.CurrentProfile.GameWindowSize.Y) - 150
                                 };
+                                progressBarGump.CenterXInViewPort();
                                 UIManager.Add(progressBarGump);
                             }
 
                             while (lootItems.TryDequeue(out uint moveItem))
                             {
-                                if (progressBarGump != null)
-                                    progressBarGump.CurrentPercentage = lootItems.Count / currentLootTotalCount;
+                                if (progressBarGump != null && !progressBarGump.IsDisposed)
+                                {
+                                    progressBarGump.CurrentPercentage = 1 - ((double)lootItems.Count / (double)currentLootTotalCount);
+                                }
 
                                 Item m = World.Items.Get(moveItem);
                                 if (m != null)
@@ -69,11 +71,13 @@ namespace ClassicUO.Game.Managers
                         }
                         lootTaskRunning = false;
                         progressBarGump?.Dispose();
-                        currentLootTotalCount = 0;
+                        currentLootTotalCount = lootItems.Count;
                     }
                     catch
                     {
                         lootTaskRunning = false;
+                        progressBarGump?.Dispose();
+                        currentLootTotalCount = lootItems.Count;
                     }
                 });
             }

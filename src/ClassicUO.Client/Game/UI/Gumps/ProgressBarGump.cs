@@ -10,13 +10,13 @@ namespace ClassicUO.Game.UI.Gumps
         public double MaxValue { get; set; } = 1;
         public double MinValue { get; set; } = 0;
         public double CurrentPercentage { get; set; }
-        public Color ForegrouneColor { get; set; } = Color.BlueViolet;
+        public Color ForegrouneColor { get; set; } = Color.Blue;
 
-        private Vector3 hueVector = ShaderHueTranslator.GetHueVector(0, false, 1);
-        public ProgressBarGump(string title, double startPercentage = 1.0, int width = 300, int height = 50) : base(0, 0)
+        private Vector3 hueVector = ShaderHueTranslator.GetHueVector(0, false, 0.6f);
+        public ProgressBarGump(string title, double startPercentage = 1.0, int width = 200, int height = 20) : base(0, 0)
         {
             CanCloseWithRightClick = true;
-            CanMove = true;
+            AcceptMouseInput = false;
 
             Width = width;
             Height = height;
@@ -26,8 +26,7 @@ namespace ClassicUO.Game.UI.Gumps
 
             if (!string.IsNullOrEmpty(title))
             {
-                TextBox t = new TextBox(title, TrueTypeLoader.EMBEDDED_FONT, 30, width, Microsoft.Xna.Framework.Color.White, FontStashSharp.RichText.TextHorizontalAlignment.Center);
-                t.X = -t.MeasuredSize.X - 5; //Set text above progress bar
+                TextBox t = new TextBox(title, TrueTypeLoader.EMBEDDED_FONT, 20, width, Color.White, FontStashSharp.RichText.TextHorizontalAlignment.Center, false);
                 Add(t);
             }
         }
@@ -36,12 +35,15 @@ namespace ClassicUO.Game.UI.Gumps
         {
             base.Draw(batcher, x, y);
 
-            batcher.DrawRectangle(
+            batcher.Draw(
                 SolidColorTextureCache.GetTexture(ForegrouneColor),
-                0,
-                0,
-                (int)(CurrentPercentage * Width),
-                Height,
+                new Rectangle
+                (
+                    x,
+                    y,
+                    (int)(CurrentPercentage * Width),
+                    Height
+                ),
                 hueVector);
 
             return true;

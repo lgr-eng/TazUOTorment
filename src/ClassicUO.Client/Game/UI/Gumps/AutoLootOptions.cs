@@ -42,8 +42,14 @@ namespace ClassicUO.Game.UI.Gumps
             topSecion.AddRight(enable = new Checkbox(0x00D2, 0x00D3, "", 0xff, 0xffff) { IsChecked = ProfileManager.CurrentProfile.EnableAutoLoot });
             enable.ValueChanged += (e, v) => { ProfileManager.CurrentProfile.EnableAutoLoot = enable.IsChecked; };
 
+            topSecion.Add(new TextBox("Show progress bar while looting", TrueTypeLoader.EMBEDDED_FONT, 18, null, Color.White, strokeEffect: false) { AcceptMouseInput = true });
+
+            Checkbox enablepb;
+            topSecion.AddRight(enablepb = new Checkbox(0x00D2, 0x00D3, "", 0xff, 0xffff) { IsChecked = ProfileManager.CurrentProfile.EnableAutoLootProgressBar });
+            enablepb.ValueChanged += (e, v) => { ProfileManager.CurrentProfile.EnableAutoLootProgressBar = enablepb.IsChecked; };
+
             NiceButton addEntry;
-            topSecion.AddRight(addEntry = new NiceButton(0, 0, 100, 25, ButtonAction.Activate, "Add entry") { IsSelectable = false });
+            topSecion.Add(addEntry = new NiceButton(0, 0, 100, 25, ButtonAction.Activate, "Add entry") { IsSelectable = false });
             addEntry.MouseUp += (e, v) =>
             {
                 AutoLootManager.Instance.AddLootItem();
