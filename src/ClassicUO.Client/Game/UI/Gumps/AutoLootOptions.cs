@@ -52,8 +52,8 @@ namespace ClassicUO.Game.UI.Gumps
 
             Add(topSecion);
 
-            ScrollArea entries = new ScrollArea(0, topSecion.Y + topSecion.Height, Width, Height - topSecion.Y + topSecion.Height + 15, true);
-            SettingsSection entriesSection = new SettingsSection("Loot entries", Width) { Y = topSecion.Y + topSecion.Height + 15 };
+            ScrollArea entries = new ScrollArea(0, topSecion.Y + topSecion.Height + 25, Width - 2, Height - topSecion.Y - topSecion.Height - 25, true);
+            SettingsSection entriesSection = new SettingsSection("Loot entries", Width - 2);
             entries.Add(entriesSection);
 
             BuildEntries(entriesSection);
@@ -110,7 +110,7 @@ namespace ClassicUO.Game.UI.Gumps
                 x += hueInput.Width + 5;
 
                 NiceButton delete;
-                area.Add(delete = new NiceButton(x, 0, 100, 49, ButtonAction.Activate, "Delete") { IsSelectable = false, DisplayBorder = true });
+                area.Add(delete = new NiceButton(x, 0, 90, 49, ButtonAction.Activate, "Delete") { IsSelectable = false, DisplayBorder = true });
                 delete.MouseUp += (s, e) =>
                 {
                     if (e.Button == Input.MouseButtonType.Left)
