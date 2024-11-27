@@ -61,8 +61,8 @@ namespace ClassicUO.Game.UI.Gumps
 
         private GumpPic _picBase;
         private GumpPic _profilePic;
-        private readonly EquipmentSlot[] _slots = new EquipmentSlot[8];
-        private readonly EquipmentSlot[] _slots_right = new EquipmentSlot[7];
+        private readonly EquipmentSlot[] _slots = new EquipmentSlot[9];
+        private readonly EquipmentSlot[] _slots_right = new EquipmentSlot[8];
         private Label _titleLabel;
         private GumpPic _virtueMenuPic;
         private Button _warModeBtn;
@@ -366,16 +366,11 @@ namespace ClassicUO.Game.UI.Gumps
 
             Add(_slots[5] = new EquipmentSlot(0, settings.Position_X_LeftSlots, settings.Position_Y_LeftSlots + settings.Size_Height_LeftSlots * 5, Layer.Tunic, this));
 
-            if (twoHandedItem != null)
-            {
-                Add(_slots[6] = new EquipmentSlot(0, settings.Position_X_LeftSlots, settings.Position_Y_LeftSlots + settings.Size_Height_LeftSlots * 6, Layer.TwoHanded, this));
-            } else
-            {
-                Add(_slots[6] = new EquipmentSlot(0, settings.Position_X_LeftSlots, settings.Position_Y_LeftSlots + settings.Size_Height_LeftSlots * 6, Layer.OneHanded, this));
-            }
-            Add(_slots[7] = new EquipmentSlot(0, settings.Position_X_LeftSlots, settings.Position_Y_LeftSlots + settings.Size_Height_LeftSlots * 7, Layer.Talisman, this));
+            Add(_slots[6] = new EquipmentSlot(0, settings.Position_X_LeftSlots, settings.Position_Y_LeftSlots + settings.Size_Height_LeftSlots * 6, Layer.OneHanded, this));
 
-            
+            Add(_slots[7] = new EquipmentSlot(0, settings.Position_X_LeftSlots, settings.Position_Y_LeftSlots + settings.Size_Height_LeftSlots * 7, Layer.TwoHanded, this));
+
+            Add(_slots[8] = new EquipmentSlot(0, settings.Position_X_LeftSlots, settings.Position_Y_LeftSlots + settings.Size_Height_LeftSlots * 8, Layer.Talisman, this));
 
 
             foreach (var slot in _slots)
@@ -389,15 +384,17 @@ namespace ClassicUO.Game.UI.Gumps
 
             Add(_slots_right[1] = new EquipmentSlot(0, settings.Position_X_RightSlots, settings.Position_Y_RightSlots + settings.Size_Height_RightSlots, Layer.Gloves, this));
 
-            Add(_slots_right[2] = new EquipmentSlot(0, settings.Position_X_RightSlots, settings.Position_Y_RightSlots + settings.Size_Height_RightSlots * 2, Layer.Arms, this));
+            Add(_slots_right[2] = new EquipmentSlot(0, settings.Position_X_RightSlots, settings.Position_Y_RightSlots + settings.Size_Height_RightSlots * 2, Layer.Torso, this));
 
-            Add(_slots_right[3] = new EquipmentSlot(0, settings.Position_X_RightSlots, settings.Position_Y_RightSlots + settings.Size_Height_RightSlots * 3, Layer.Pants, this));
+            Add(_slots_right[3] = new EquipmentSlot(0, settings.Position_X_RightSlots, settings.Position_Y_RightSlots + settings.Size_Height_RightSlots * 3, Layer.Arms, this));
 
-            Add(_slots_right[4] = new EquipmentSlot(0, settings.Position_X_RightSlots, settings.Position_Y_RightSlots + settings.Size_Height_RightSlots * 4, Layer.Cloak, this));
+            Add(_slots_right[4] = new EquipmentSlot(0, settings.Position_X_RightSlots, settings.Position_Y_RightSlots + settings.Size_Height_RightSlots * 4, Layer.Pants, this));
 
-            Add(_slots_right[5] = new EquipmentSlot(0, settings.Position_X_RightSlots, settings.Position_Y_RightSlots + settings.Size_Height_RightSlots * 5, Layer.Waist, this));
+            Add(_slots_right[5] = new EquipmentSlot(0, settings.Position_X_RightSlots, settings.Position_Y_RightSlots + settings.Size_Height_RightSlots * 5, Layer.Cloak, this));
 
-            Add(_slots_right[6] = new EquipmentSlot(0, settings.Position_X_RightSlots, settings.Position_Y_RightSlots + settings.Size_Height_RightSlots * 6, Layer.Shoes, this));
+            Add(_slots_right[6] = new EquipmentSlot(0, settings.Position_X_RightSlots, settings.Position_Y_RightSlots + settings.Size_Height_RightSlots * 6, Layer.Waist, this));
+
+            Add(_slots_right[7] = new EquipmentSlot(0, settings.Position_X_RightSlots, settings.Position_Y_RightSlots + settings.Size_Height_RightSlots * 7, Layer.Shoes, this));
 
             foreach (var slot in _slots_right)
             {
