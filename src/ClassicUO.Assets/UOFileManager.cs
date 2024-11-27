@@ -43,7 +43,7 @@ using System.Threading.Tasks;
 
 namespace ClassicUO.Assets
 {
-    public static class UOFileManager
+    public class UOFileManager
     {
         public static string GetUOFilePath(string file)
         {

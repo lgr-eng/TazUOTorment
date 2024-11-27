@@ -1,6 +1,6 @@
 ﻿#region license
 
-// Copyright (c) 2021, andreakarasho
+// Copyright (c) 2024, andreakarasho
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without
@@ -30,67 +30,58 @@
 
 #endregion
 
-namespace ClassicUO.IO
+using ClassicUO.Assets;
+using ClassicUO.IO;
+using System;
+using System.Threading.Tasks;
+
+namespace ClassicUO.Assets
 {
-    public class UOFileMul : UOFile
+    public abstract class UOFileLoader : IDisposable
     {
-        private readonly int _count, _patch;
-        private readonly UOFileIdxMul _idxFile;
-
-        public UOFileMul(string file, string idxfile) : this(file)
+        public UOFileManager FileManager { get; set; }
+        protected UOFileLoader()
         {
-            _idxFile = new UOFileIdxMul(idxfile);
         }
 
-        public UOFileMul(string file) : base(file)
+
+        public bool IsDisposed { get; private set; }
+
+        public virtual void Dispose()
         {
-            Load();
-        }
-
-        public UOFile IdxFile => _idxFile;
-
-
-        public override void FillEntries(ref UOFileIndex[] entries)
-        {
-            UOFile file = _idxFile ?? (UOFile) this;
-
-            int count = (int) file.Length / 12;
-            entries = new UOFileIndex[count];
-
-            for (int i = 0; i < count; i++)
+            if (IsDisposed)
             {
-                ref UOFileIndex e = ref entries[i];
-                e.Address = StartAddress;   // .mul mmf address
-                e.FileSize = (uint) Length; // .mul mmf length
-                e.Offset = file.ReadUInt(); // .idx offset
-                e.Length = file.ReadInt();  // .idx length
-                e.DecompressedLength = 0;   // UNUSED HERE --> .UOP
-
-                int size = file.ReadInt();
-
-                if (size > 0)
-                {
-                    e.Width = (short) (size >> 16);
-                    e.Height = (short) (size & 0xFFFF);
-                }
-            }
-        }
-
-        public override void Dispose()
-        {
-            _idxFile?.Dispose();
-            base.Dispose();
-        }
-
-        private class UOFileIdxMul : UOFile
-        {
-            public UOFileIdxMul(string idxpath) : base(idxpath, true)
-            {
+                return;
             }
 
-            public override void FillEntries(ref UOFileIndex[] entries)
+            IsDisposed = true;
+
+            ClearResources();
+        }
+
+        public UOFileIndex[] Entries;
+
+        public abstract Task Load();
+
+        public virtual void ClearResources()
+        {
+        }
+
+        public ref UOFileIndex GetValidRefEntry(int index)
+        {
+            if (index < 0 || Entries == null || index >= Entries.Length)
             {
+                return ref UOFileIndex.Invalid;
             }
+
+            ref UOFileIndex entry = ref Entries[index];
+
+            if (entry.Offset < 0 || entry.Length <= 0 || entry.Offset == 0x0000_0000_FFFF_FFFF)
+            {
+                return ref UOFileIndex.Invalid;
+            }
+
+            return ref entry;
         }
     }
 }
