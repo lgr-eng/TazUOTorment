@@ -7121,44 +7121,120 @@ namespace ClassicUO.Network
                 {
                     gump.Add(new Checkbox(gparams, lines), page);
                 }
-                else if (
-                    string.Equals(entry, "tooltip", StringComparison.InvariantCultureIgnoreCase)
-                )
+                //else if (
+                //    string.Equals(entry, "tooltip", StringComparison.InvariantCultureIgnoreCase)
+                //)
+                //{
+                //    string text = null;
+
+                //    if (gparams.Count > 2 && gparams[2].Length != 0)
+                //    {
+                //        string args = gparams[2];
+
+                //        for (int i = 3; i < gparams.Count; i++)
+                //        {
+                //            args += '\t' + gparams[i];
+                //        }
+
+                //        if (args.Length == 0)
+                //        {
+                //            text = ClilocLoader.Instance.GetString(int.Parse(gparams[1]));
+                //            Log.Error(
+                //                $"String '{args}' too short, something wrong with gump tooltip: {text}"
+                //            );
+                //        }
+                //        else
+                //        {
+                //            text = ClilocLoader.Instance.Translate(
+                //                int.Parse(gparams[1]),
+                //                args,
+                //                false
+                //            );
+                //        }
+                //    }
+                //    else
+                //    {
+                //        text = ClilocLoader.Instance.GetString(int.Parse(gparams[1]));
+                //    }
+
+                //    Control last =
+                //        gump.Children.Count != 0 ? gump.Children[gump.Children.Count - 1] : null;
+
+                //    if (last != null)
+                //    {
+                //        if (last.HasTooltip)
+                //        {
+                //            if (last.Tooltip is string s)
+                //            {
+                //                s += '\n' + text;
+                //                last.SetTooltip(s);
+                //            }
+                //        }
+                //        else
+                //        {
+                //            last.SetTooltip(text);
+                //        }
+
+                //        last.Priority = ClickPriority.High;
+                //        last.AcceptMouseInput = true;
+                //    }
+                //}
+                else if (string.Equals(entry, "tooltip", StringComparison.InvariantCultureIgnoreCase))
                 {
                     string text = null;
 
-                    if (gparams.Count > 2 && gparams[2].Length != 0)
+                    if (gparams.Count > 1)
                     {
-                        string args = gparams[2];
-
-                        for (int i = 3; i < gparams.Count; i++)
+                        if (int.TryParse(gparams[1], out int clilocNumber))
                         {
-                            args += '\t' + gparams[i];
-                        }
+                            // Cliloc-based tooltip
+                            if (gparams.Count > 2 && gparams[2].Length != 0)
+                            {
+                                // Process cliloc translation with arguments
+                                string args = gparams[2];
 
-                        if (args.Length == 0)
-                        {
-                            text = ClilocLoader.Instance.GetString(int.Parse(gparams[1]));
-                            Log.Error(
-                                $"String '{args}' too short, something wrong with gump tooltip: {text}"
-                            );
+                                for (int i = 3; i < gparams.Count; i++)
+                                {
+                                    args += '\t' + gparams[i];
+                                }
+
+                                if (args.Length == 0)
+                                {
+                                    text = ClilocLoader.Instance.GetString(clilocNumber);
+                                    Log.Error(
+                                        $"String '{args}' too short, something wrong with gump tooltip: {text}"
+                                    );
+                                }
+                                else
+                                {
+                                    text = ClilocLoader.Instance.Translate(clilocNumber, args, false);
+                                }
+                            }
+                            else
+                            {
+                                // Normal cliloc tooltip
+                                text = ClilocLoader.Instance.GetString(clilocNumber);
+                            }
                         }
                         else
                         {
-                            text = ClilocLoader.Instance.Translate(
-                                int.Parse(gparams[1]),
-                                args,
-                                false
-                            );
+                            // String-based tooltip
+                            text = gparams[1];
+
+                            for (int i = 2; i < gparams.Count; i++)
+                            {
+                                text += " " + gparams[i]; // Concatenate words for multi-word tooltips
+                            }
                         }
                     }
-                    else
+
+                    if (text == null)
                     {
-                        text = ClilocLoader.Instance.GetString(int.Parse(gparams[1]));
+                        text = "Unknown Tooltip"; // Fallback
                     }
 
-                    Control last =
-                        gump.Children.Count != 0 ? gump.Children[gump.Children.Count - 1] : null;
+                    // Get the last UI element and assign the tooltip
+                    Control last = gump.Children.Count != 0 ? gump.Children[gump.Children.Count - 1] : null;
 
                     if (last != null)
                     {
